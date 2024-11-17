@@ -11,7 +11,7 @@ export const registerUser = async (req, res) => {
     const { email, password} = req.body;
 
     if (!email || !password) {
-        return res.status(400).json({ error: "Falta campo" });
+        return res.status(400).json({ error: `Falta campo ${!email ? "email" : "password"}` });
     }
 
     try {
@@ -54,8 +54,8 @@ export const loginUser = async (req, res) => {
       const user = result?.rows?.[0];
       
       if (!user) {
-        console.log("Usuario no encontrado");
-        return res.status(401).json({ error: "Usuario o contraseña incorrectos" });
+        //console.log("Usuario no encontrado");
+        return res.status(401).json({ error: "Usuario no encontrado" });
       }
   
       //console.log("Contraseña en la base de datos (cifrada):", user.password);
