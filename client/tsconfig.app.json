@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "authController.d.ts"]
+  "include": ["src", "authController.d.ts", "public/icons"]
 }

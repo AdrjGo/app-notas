@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import ButtonTrash from "./ButtonTrash";
 
-interface Note {
+export interface Note {
   id: number;
   title: string;
   description: string;
@@ -21,13 +22,12 @@ export default function CardNote() {
       fetch("http://localhost:3000/api/notes/all", {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
-        credentials: "include", 
+        credentials: "include",
       })
         .then((response) => {
           if (!response.ok) {
-
             if (response.status === 401) {
               console.error("Token expirado o no autorizado");
               localStorage.removeItem("token");
@@ -46,8 +46,7 @@ export default function CardNote() {
         .catch((error) => {
           console.error("Error al recuperar las notas", error);
         });
-    }, 5000); 
-
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -61,10 +60,15 @@ export default function CardNote() {
           notes.map((note) => (
             <li
               key={note.id}
-              className="border-2 border-white rounded-lg my-3 text-left p-3"
+              className="border-2 border-white rounded-lg my-3 text-left p-3 flex justify-between items-center"
             >
-              <h2 className="text-[1vw] font-bold text-white">{note.title}</h2>
-              <p className="text-[1vw] text-gray-400">{note.description}</p>
+              <div>
+                <h2 className="text-[1vw] font-bold text-white">
+                  {note.title}
+                </h2>
+                <p className="text-[1vw] text-gray-400">{note.description}</p>
+              </div>
+              <ButtonTrash setNotes={setNotes} notes={notes} id={note.id} />
             </li>
           ))
         )}
