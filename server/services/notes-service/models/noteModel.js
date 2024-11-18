@@ -42,4 +42,7 @@ export const getNotesByUserId = async (user_id) => {
   return rows;
 };
 
+
+
 export default { createNote, getNotesByUserId };
+

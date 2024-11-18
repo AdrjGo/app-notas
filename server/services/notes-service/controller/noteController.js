@@ -20,7 +20,6 @@ export const createNoteController = async (req, res) => {
   }
 };
 
-
 //Obtener notas
 export const getNotesController = async (req, res) => {
   const user_id = req.userId;
@@ -39,3 +38,20 @@ export const getNotesController = async (req, res) => {
   }
 };
 
+export const deleteNoteController = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const note = await Note.findByPk(id);
+    if (!note) {
+      return res.status(404).json({ error: "Nota no encontrada" });
+    }
+
+    await note.destroy();
+
+    return res.status(200).json({ message: "Nota eliminada con éxito" });
+  } catch (error) {
+    console.error("Error al eliminar la nota:", error);
+    return res.status(500).json({ error: "Error al eliminar la nota" });
+  }
+};

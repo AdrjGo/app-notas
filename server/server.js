@@ -8,6 +8,7 @@ import {
 } from "./services/auth-service/controller/authController.js";
 import {
   createNoteController,
+  deleteNoteController,
   getNotesController,
 } from "./services/notes-service/controller/noteController.js";
 
@@ -34,6 +35,7 @@ app.post("/api/login", loginUser);
 //Rutas de notas
 app.post("/api/notes/create", verifyToken, createNoteController);
 app.get("/api/notes/all", verifyToken, getNotesController);
+app.delete("/api/notes/delete/:id", verifyToken, deleteNoteController);
 
 app.get("/", (req, res) => {
   res.send("¡Servidor en funcionamiento!");
