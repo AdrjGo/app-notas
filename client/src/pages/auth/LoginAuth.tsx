@@ -27,7 +27,11 @@ export default function RegisterAuth() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({
+          email: email.trim(),
+          password: password.trim(),
+        }),
+        credentials: "include", // Incluir cookies si es necesario
       });
 
       const data = await response.json();
@@ -36,9 +40,12 @@ export default function RegisterAuth() {
         throw new Error(data.error || "Error al iniciar sesión");
       }
 
+      // Almacenar el token en localStorage después de iniciar sesión
+      localStorage.setItem("token", data.token); // Aquí se guarda el token recibido
+
       setSuccessMessage(data.message);
       setErrorMessage("");
-      navigate("/");
+      navigate("/"); // Redirige al usuario a la página principal
       console.log("Formulario de login enviado");
     } catch (err) {
       console.error("Error al iniciar sesión:", err);
@@ -55,7 +62,7 @@ export default function RegisterAuth() {
         buttonText="Iniciar sesión"
         onSubmit={handleLogin}
         footerFormText="¿No tienes una cuenta?"
-        footerFormUrl="/"
+        footerFormUrl="/register"
       />
       <Message message={successMessage} type="success" />
       <Message message={errorMessage} type="error" />
